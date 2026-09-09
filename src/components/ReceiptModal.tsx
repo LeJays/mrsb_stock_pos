@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Sale } from '../types';
 import { Printer, X, CheckCircle, Sparkles } from 'lucide-react';
 import { Logo } from './Logo';
@@ -10,15 +10,29 @@ interface ReceiptModalProps {
 
 export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => {
   const receiptRef = useRef<HTMLDivElement>(null);
+  const [printPageHeightMm, setPrintPageHeightMm] = useState(120);
 
   if (!sale) return null;
 
   const handlePrint = () => {
-    window.print();
+    const receiptHeightPx = receiptRef.current?.scrollHeight ?? 0;
+    // The ticket becomes a little narrower in print (80 mm), so reserve a
+    // small amount of room for wrapped product names and the bottom margin.
+    const pageHeightMm = Math.max(
+      95,
+      Math.ceil(((receiptHeightPx * 1.18) + 32) * 25.4 / 96),
+    );
+
+    setPrintPageHeightMm(pageHeightMm);
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => window.print());
+    });
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-fadeIn">
+    <>
+      <style>{`@media print { @page { size: 80mm ${printPageHeightMm}mm; margin: 0; } }`}</style>
+      <div id="receiptPrintModal" className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto animate-fadeIn">
       <div className="relative w-full max-w-md bg-[#121212] border border-[#d4af37]/40 rounded-xl shadow-[0_20px_60px_rgba(0,0,0,0.8)] overflow-hidden my-6">
         {/* Top actions bar */}
         <div className="flex items-center justify-between px-5 py-3.5 bg-[#181818] border-b border-[#282828]">
@@ -54,14 +68,8 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
               <div className="flex justify-center mb-1">
                 <Logo size="sm" showSlogan={false} />
               </div>
-              <h2 className="text-sm font-bold tracking-widest uppercase font-serif text-gray-900 mt-1">
-                MRS.B LUXURY BEAUTY
-              </h2>
-              <p className="text-[10px] text-gray-600 tracking-wider">
-                SOYEZ VOTRE STANDARD DE BEAUTÉ
-              </p>
               <p className="text-[9px] text-gray-500 mt-1">
-                Tél : +225 07 00 00 00 / Abidjan, Côte d'Ivoire
+                Tél : +237 6 94 70 09 44 / Yaoundé, Barrière, Cameroun
               </p>
             </div>
 
@@ -158,7 +166,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
               <p>Les articles vendus ne sont ni repris ni échangés.</p>
               <div className="flex justify-center items-center gap-1 text-[#b89524] pt-1">
                 <Sparkles className="w-2.5 h-2.5" />
-                <span className="font-serif italic text-[10px]">Mrs. B Beauty — Sublimez-vous</span>
+                <span className="font-serif italic text-[10px]">Mrs B — Sublimez-vous</span>
               </div>
             </div>
           </div>
@@ -181,6 +189,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ sale, onClose }) => 
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 };

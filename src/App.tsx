@@ -139,7 +139,7 @@ export default function App() {
       <div className="min-h-screen bg-[#070707] text-white flex flex-col items-center justify-center p-4">
         <div className="w-12 h-12 border-2 border-[#d4af37] border-t-transparent rounded-full animate-spin mb-4"></div>
         <h2 className="font-serif text-lg text-[#d4af37] font-semibold tracking-wide">
-          MRS.B LUXURY BEAUTY
+          Mrs B
         </h2>
         <p className="text-xs text-gray-400 mt-1">Connexion à Firebase en cours...</p>
       </div>
@@ -270,7 +270,7 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t border-[#1e1e1e] bg-[#0c0c0c] py-4 px-6 text-center text-xs text-gray-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-          <p>© {new Date().getFullYear()} MRS.B Luxury Beauty — Caisse Enregistreuse & Gestion de Stocks</p>
+          <p>© {new Date().getFullYear()} Mrs B — Caisse Enregistreuse & Gestion de Stocks</p>
           <div className="flex items-center gap-4 text-[11px] text-gray-400">
             <span>Session : <strong className="text-[#d4af37]">{currentUser.role === 'admin' ? 'Administrateur' : 'Caisse'}</strong></span>
             <span>•</span>

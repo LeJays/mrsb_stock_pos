@@ -26,25 +26,64 @@
 
 /* Print Media Styles for POS Thermal Receipt */
 @media print {
-  body * {
-    visibility: hidden;
+  @page {
+    margin: 0;
+    size: 80mm auto;
   }
-  #printableReceipt, #printableReceipt * {
-    visibility: visible;
-  }
-  #printableReceipt {
-    position: absolute;
-    left: 0;
-    top: 0;
+
+  html, body {
     width: 80mm !important;
-    max-width: 100% !important;
-    padding: 0 !important;
     margin: 0 !important;
-    background: white !important;
-    color: black !important;
-    box-shadow: none !important;
+    padding: 0 !important;
+    background: #fff !important;
   }
-  header, nav, button, .print\\:hidden {
+
+  /* Keep only the receipt modal in the print document. This preserves the
+     receipt's text, layout and image instead of hiding them with visibility. */
+  #root > div > :not(#receiptPrintModal) {
     display: none !important;
+  }
+
+  #receiptPrintModal {
+    position: static !important;
+    display: block !important;
+    width: 80mm !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+
+  #receiptPrintModal > div {
+    width: 80mm !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+    background: white !important;
+    box-shadow: none !important;
+    display: block !important;
+    overflow: visible !important;
+  }
+
+  #receiptPrintModal > div > :not(#printableReceipt) {
+    display: none !important;
+  }
+
+  #printableReceipt {
+    position: static !important;
+    display: block !important;
+    width: 80mm !important;
+    box-sizing: border-box !important;
+    color: #000 !important;
+  }
+
+  #printableReceipt > div {
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  #printableReceipt img {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
   }
 }

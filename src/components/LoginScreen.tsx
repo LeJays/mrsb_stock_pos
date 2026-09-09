@@ -448,7 +448,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess, isFire
 
       {/* Footer Info */}
       <div className="mt-6 text-center text-xs text-gray-500 max-w-sm">
-        <p>Boutique MRS.B Luxury Beauty — Authentification Firebase Sécurisée</p>
+        <p>Boutique Mrs B — Authentification Firebase Sécurisée</p>
       </div>
     </div>
   );
