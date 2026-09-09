@@ -1,0 +1,6 @@
+{
+  "name": "MRSB Stock & Caisse POS",
+  "description": "Système de caisse enregistreuse et gestion de stock pour la boutique MRS.B Luxury Beauty",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

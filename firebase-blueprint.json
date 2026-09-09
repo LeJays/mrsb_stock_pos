@@ -1,0 +1,119 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "Article de vente ou cosmétique en stock",
+      "type": "object",
+      "properties": {
+        "nom": { "type": "string", "maxLength": 150 },
+        "categorie": { "type": "string", "maxLength": 100 },
+        "prixAchat": { "type": "number" },
+        "prixVente": { "type": "number" },
+        "stock": { "type": "number" },
+        "unite": { "type": "string", "maxLength": 50 },
+        "codeBarre": { "type": "string", "maxLength": 50 },
+        "actif": { "type": "boolean" },
+        "dateCreation": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["nom", "categorie", "prixAchat", "prixVente", "stock", "unite"]
+    },
+    "Sale": {
+      "title": "Sale",
+      "description": "Vente effectuée en caisse",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 50 },
+        "heure": { "type": "string", "maxLength": 20 },
+        "vendeurId": { "type": "string", "maxLength": 128 },
+        "vendeurNom": { "type": "string", "maxLength": 100 },
+        "client": { "type": "string", "maxLength": 120 },
+        "total": { "type": "number" },
+        "remise": { "type": "number" },
+        "paiement": { "type": "string", "maxLength": 50 },
+        "montantDonne": { "type": "number" },
+        "montantRendu": { "type": "number" },
+        "statut": { "type": "string", "maxLength": 30 },
+        "items": { "type": "array" }
+      },
+      "required": ["date", "total", "paiement", "items"]
+    },
+    "Purchase": {
+      "title": "Purchase",
+      "description": "Approvisionnement et réassort de stock",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 50 },
+        "fournisseur": { "type": "string", "maxLength": 120 },
+        "produitId": { "type": "string", "maxLength": 128 },
+        "produitNom": { "type": "string", "maxLength": 150 },
+        "quantite": { "type": "number" },
+        "prixAchat": { "type": "number" },
+        "montantTotal": { "type": "number" },
+        "utilisateur": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["date", "quantite", "prixAchat", "montantTotal"]
+    },
+    "CashRegister": {
+      "title": "CashRegister",
+      "description": "Session d'ouverture et clôture de caisse",
+      "type": "object",
+      "properties": {
+        "date": { "type": "string", "maxLength": 50 },
+        "montantOuverture": { "type": "number" },
+        "montantActuel": { "type": "number" },
+        "montantVente": { "type": "number" },
+        "montantRetrait": { "type": "number" },
+        "statut": { "type": "string", "maxLength": 30 },
+        "vendeurNom": { "type": "string", "maxLength": 100 }
+      },
+      "required": ["date", "montantOuverture", "statut"]
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Catégorie de produit",
+      "type": "object",
+      "properties": {
+        "nom": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string", "maxLength": 300 }
+      },
+      "required": ["nom"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Utilisateur et rôle dans MRSB",
+      "type": "object",
+      "properties": {
+        "nom": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 120 },
+        "role": { "type": "string", "maxLength": 30 }
+      },
+      "required": ["nom", "email", "role"]
+    }
+  },
+  "firestore": {
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Catalogue de produits et état de stock"
+    },
+    "/sales/{saleId}": {
+      "schema": "Sale",
+      "description": "Transactions et ventes enregistrées"
+    },
+    "/purchases/{purchaseId}": {
+      "schema": "Purchase",
+      "description": "Approvisionnements et entrées de stock"
+    },
+    "/cash_register/{registerId}": {
+      "schema": "CashRegister",
+      "description": "Sessions journalières de caisse"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "Classification des articles"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Profils des vendeurs et administrateurs"
+    }
+  }
+}
